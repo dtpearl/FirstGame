@@ -1,1 +1,4 @@
 /first-game/assets/*
+
+# misc
+.DS_Store
