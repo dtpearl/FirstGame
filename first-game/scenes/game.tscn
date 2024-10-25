@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=4 uid="uid://cl6gacwivifub"]
+[gd_scene load_steps=14 format=4 uid="uid://cl6gacwivifub"]
 
 [ext_resource type="PackedScene" uid="uid://bjb5lfrh66y8j" path="res://scenes/player.tscn" id="1_rcvl7"]
 [ext_resource type="Texture2D" uid="uid://b3gnwqokq8gt0" path="res://assets/sprites/world_tileset.png" id="2_acgi3"]
+[ext_resource type="PackedScene" uid="uid://bxcdgf14q7i6e" path="res://scenes/grass_platform.tscn" id="3_nnp1p"]
+[ext_resource type="PackedScene" uid="uid://dquebkjgim3mc" path="res://scenes/desert_platform.tscn" id="4_i6kvb"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_03nqj"]
 distance = 73.0
@@ -170,6 +172,83 @@ texture = ExtResource("2_acgi3")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_ayoqn")
 
+[sub_resource type="Animation" id="Animation_2yb4h"]
+resource_name = "move"
+length = 2.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.2, 1.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(368, -59), Vector2(447, -59)]
+}
+
+[sub_resource type="Animation" id="Animation_kltcn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(368, -59)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0eb50"]
+_data = {
+"RESET": SubResource("Animation_kltcn"),
+"move": SubResource("Animation_2yb4h")
+}
+
+[sub_resource type="Animation" id="Animation_gmjm5"]
+resource_name = "desert_lift"
+length = 1.5
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(471, -138)]
+}
+
+[sub_resource type="Animation" id="Animation_8lkob"]
+length = 1.5
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(0.707106, 1),
+"update": 0,
+"values": [Vector2(439, -93), Vector2(439, -139)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0f8tr"]
+_data = {
+"RESET": SubResource("Animation_8lkob"),
+"desert_lift": SubResource("Animation_gmjm5")
+}
+
 [node name="Game" type="Node2D"]
 position = Vector2(-4, -1)
 
@@ -184,10 +263,31 @@ position_smoothing_enabled = true
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(3, 109)
+position = Vector2(4, 122)
 shape = SubResource("WorldBoundaryShape2D_03nqj")
 
 [node name="Layer0" type="TileMapLayer" parent="."]
 use_parent_material = true
-tile_map_data = PackedByteArray("AAD9////AAAAAAAAAAD+////AAAAAAAAAAD/////AAAAAAAAAAABAPz/AAAAAAAAAAACAPv/AAAAAAAAAAADAPv/AAAAAAAAAAAEAP3/AAAAAAAAAAAFAP3/AAAAAAAAAAAJAP3/AAAAAAAAAAAKAPz/AAAAAAAAAAALAPz/AAAAAAAAAAAMAP3/AAAAAAAAAAANAP7/AAAEAAAAAAAOAP7/AAAEAAAAAAAPAP7/AAAEAAAAAAASAAEAAAAEAAAAAAATAAEAAAAEAAAAAAAAAAEAAAAGAAAAAAABAAEAAAAGAAAAAAACAAEAAAAGAAAAAAAGAAEAAAAGAAAAAAAHAAEAAAAGAAAAAAALAAEAAAAGAAAAAAADAAEAAAAJAAAAAAAEAAEAAAAKAAAAAAAFAAEAAAALAAAAAAAIAAEAAAAJAAAAAAAKAAEAAAAHAAEAAAAJAAEAAAALAAAAAAABAP3/AAAAAAEAAAACAP3/AAAAAAEAAAADAP3/AAAAAAEAAAACAPz/AAABAAEAAAADAPz/AAABAAEAAAAFAPz/AAAAAAUAAAAFAPv/AAAAAAQAAAAFAPr/AAAAAAMAAAAPAP3/AAAFAAUAAAAPAPz/AAAFAAQAAAAPAPv/AAAFAAMAAAADAAIAAAAEAAkAAAAEAAIAAAAEAAkAAAAFAAIAAAAEAAkAAAAGAAIAAAAGAAEAAAAHAAIAAAAGAAEAAAAIAAIAAAAEAAkAAAAJAAIAAAAEAAkAAAAKAAIAAAAGAAEAAAALAAIAAAAGAAEAAAAMAAIAAAAEAAkAAAANAAIAAAAEAAkAAAAOAAIAAAAEAAkAAAAPAAIAAAAEAAkAAAAQAAIAAAAEAAkAAAARAAIAAAAEAAkAAAAAAAIAAAAGAAEAAAABAAIAAAAGAAEAAAACAAIAAAAGAAEAAAASAAIAAAAEAAEAAAATAAIAAAAEAAEAAAA=")
+tile_map_data = PackedByteArray("AAD9////AAAAAAAAAAD+////AAAAAAAAAAD/////AAAAAAAAAAABAPz/AAAAAAAAAAACAPv/AAAAAAAAAAADAPv/AAAAAAAAAAAEAP3/AAAAAAAAAAAFAP3/AAAAAAAAAAAJAP3/AAAAAAAAAAAKAPz/AAAAAAAAAAALAPz/AAAAAAAAAAAMAP3/AAAAAAAAAAANAP7/AAAEAAAAAAAOAP7/AAAEAAAAAAAPAP7/AAAEAAAAAAASAAEAAAAEAAAAAAATAAEAAAAEAAAAAAAAAAEAAAAGAAAAAAABAAEAAAAGAAAAAAACAAEAAAAGAAAAAAAGAAEAAAAGAAAAAAAHAAEAAAAGAAAAAAALAAEAAAAGAAAAAAADAAEAAAAJAAAAAAAEAAEAAAAKAAAAAAAFAAEAAAALAAAAAAAIAAEAAAAJAAAAAAAKAAEAAAAHAAEAAAAJAAEAAAALAAAAAAABAP3/AAAAAAEAAAACAP3/AAAAAAEAAAADAP3/AAAAAAEAAAACAPz/AAABAAEAAAADAPz/AAABAAEAAAAFAPz/AAAAAAUAAAAFAPv/AAAAAAQAAAAFAPr/AAAAAAMAAAAPAP3/AAAFAAUAAAAPAPz/AAAFAAQAAAAPAPv/AAAFAAMAAAADAAIAAAAEAAkAAAAEAAIAAAAEAAkAAAAFAAIAAAAEAAkAAAAGAAIAAAAGAAEAAAAHAAIAAAAGAAEAAAAIAAIAAAAEAAkAAAAJAAIAAAAEAAkAAAAKAAIAAAAGAAEAAAALAAIAAAAGAAEAAAAMAAIAAAAEAAkAAAANAAIAAAAEAAkAAAAOAAIAAAAEAAkAAAAPAAIAAAAEAAkAAAAQAAIAAAAEAAkAAAARAAIAAAAEAAkAAAAAAAIAAAAGAAEAAAABAAIAAAAGAAEAAAACAAIAAAAGAAEAAAASAAIAAAAFAAEAAAATAAIAAAAFAAEAAAAUAAEAAAAEAAAAAAAVAAEAAAAEAAAAAAAWAAEAAAAEAAAAAAAaAAIAAAAEAAAAAAAbAAIAAAAEAAAAAAAcAAIAAAAEAAEAAAAVAPz/AAAEAAAAAAAUAPz/AAAEAAAAAAATAPz/AAAEAAAAAAAWAAIAAAAEAAEAAAAVAAIAAAAFAAEAAAAUAAIAAAAFAAEAAAAYAAMAAAAEAAAAAAAZAAMAAAAEAAAAAAAXAAMAAAAEAAAAAAAWAAMAAAAFAAEAAAAVAAMAAAAFAAEAAAAUAAMAAAAFAAEAAAATAAMAAAAFAAEAAAASAAMAAAAFAAEAAAARAAMAAAAEAAoAAAAQAAMAAAAEAAoAAAAPAAMAAAAEAAoAAAAOAAMAAAAEAAoAAAANAAMAAAAEAAoAAAAMAAMAAAAEAAoAAAAJAAMAAAAEAAoAAAAIAAMAAAAEAAoAAAAaAAMAAAAEAAEAAAAbAAMAAAAEAAEAAAAcAAMAAAAEAAEAAAATAP3/AAAEAAEAAAAUAP3/AAAEAAEAAAAVAP3/AAAEAAEAAAAdAPz/AAAEAAAAAAAeAPz/AAAEAAAAAAAfAPz/AAAEAAAAAAAgAPz/AAAEAAAAAAAdAP3/AAAEAAEAAAAeAP3/AAAEAAEAAAAfAP3/AAAEAAEAAAAgAP3/AAAEAAEAAAAcAAAAAAAEAAEAAAAcAAEAAAAEAAEAAAAcAP//AAAEAAAAAAAdAP//AAAEAAEAAAAdAP7/AAAEAAEAAAAdAAAAAAAFAAEAAAAdAAEAAAAFAAEAAAAdAAIAAAAFAAEAAAAdAAMAAAAFAAEAAAAeAPv/AAADAAgAAAAeAPr/AAADAAcAAAAeAPj/AAACAAQAAAAVAPn/AAACAAQAAAAVAPv/AAADAAgAAAAYAPj/AAAEAAEAAAAZAPj/AAAEAAEAAAAaAPj/AAAEAAEAAAAYAPf/AAAEAAAAAAAZAPf/AAAEAAAAAAAaAPf/AAAEAAAAAAAUAPX/AAAEAAAAAAATAPX/AAAEAAAAAAASAPX/AAAEAAAAAAARAPX/AAAEAAAAAAAOAPf/AAAEAAAAAAANAPf/AAAEAAAAAAAMAPf/AAAEAAAAAAALAPf/AAAAAAAAAAAKAPj/AAAAAAAAAAAJAPj/AAAAAAAAAAAGAPf/AAAAAAAAAAAFAPf/AAAAAAAAAAAEAPf/AAAAAAAAAAADAPf/AAAAAAAAAAAEAPb/AAAAAAUAAAACAPr/AAAAAAUAAAACAPn/AAAAAAMAAAAEAPX/AAAAAAMAAAAKAP3/AAAAAAEAAAALAP3/AAAAAAEAAAD///X/AAAAAAQAAAD///b/AAAAAAUAAAD7//j/AAAAAAAAAAD8//j/AAAAAAAAAAD9//f/AAAAAAAAAAD9//j/AAAAAAEAAAD+//f/AAAAAAAAAAD+//j/AAAAAAEAAAD///T/AAAAAAMAAAD///f/AAAAAAAAAAD///j/AAAAAAEAAAD7//f/AAAGAAUAAAAGAPb/AAAGAAUAAAAGAPX/AAAGAAQAAAAGAPT/AAAGAAMAAAANAPb/AAAFAAUAAAANAPX/AAAFAAQAAAANAPT/AAAFAAMAAAASAPT/AAAIAAYAAAAZAPb/AAAIAAYAAAAfAPv/AAAHAAYAAAAAAPn/AAAAAAAAAAD///n/AAAAAAEAAAAHAPr/AAAAAAAAAAAGAP3/AAAJAAAAAAAIAP3/AAALAAAAAAAHAP3/AAAKAAAAAAA=")
 tile_set = SubResource("TileSet_pwm55")
+
+[node name="GrassPlatform" parent="." instance=ExtResource("3_nnp1p")]
+position = Vector2(-51, -60)
+
+[node name="GrassPlatform2" parent="." instance=ExtResource("3_nnp1p")]
+position = Vector2(368, -59)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GrassPlatform2"]
+libraries = {
+"": SubResource("AnimationLibrary_0eb50")
+}
+autoplay = "move"
+
+[node name="DesertPlatform" parent="." instance=ExtResource("4_i6kvb")]
+position = Vector2(439, -93)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DesertPlatform"]
+libraries = {
+"": SubResource("AnimationLibrary_0f8tr")
+}
+autoplay = "RESET"
