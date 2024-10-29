@@ -293,5 +293,14 @@ libraries = {
 }
 autoplay = "RESET"
 
-[node name="Area2D" parent="." instance=ExtResource("5_7cdhn")]
-position = Vector2(39, 11)
+[node name="Coin" parent="." instance=ExtResource("5_7cdhn")]
+position = Vector2(104, 11)
+
+[node name="Coin2" parent="." instance=ExtResource("5_7cdhn")]
+position = Vector2(171, 9)
+
+[node name="Coin3" parent="." instance=ExtResource("5_7cdhn")]
+position = Vector2(183, -69)
+
+[node name="Coin4" parent="." instance=ExtResource("5_7cdhn")]
+position = Vector2(312, -70)
